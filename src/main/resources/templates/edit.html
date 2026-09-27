@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${'Edit ' + movie.title + ' - CineVerse'}">
+        Edit Movie - CineVerse
+    </title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+    <meta name="description"
+          content="Edit movie information in the CineVerse movie collection.">
+
+    <meta name="robots"
+          content="noindex, nofollow">
+
+    <link rel="canonical"
+          th:href="${'http://localhost:8082/movies/edit/' + movie.id}">
+
+
+</head>
+
+<body>
+
+<header>
+
+    <nav class="navbar"
+         aria-label="Main navigation">
+
+        <a href="/"
+           class="logo"
+           aria-label="CineVerse home">
+
+            Cine<span>Verse</span>
+
+        </a>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="/">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="/movies">
+                    Movies
+                </a>
+            </li>
+
+            <li>
+                <a href="/top-rated">
+                    Top Rated
+                </a>
+            </li>
+
+            <li>
+                <a href="/favorites">
+                    Favorites
+                </a>
+            </li>
+
+        </ul>
+
+        <a href="/movies"
+           class="nav-button">
+
+            Explore Movies
+
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <section class="page-hero">
+
+        <div class="page-hero-content">
+
+            <p class="hero-label">
+                CINEVERSE ADMIN
+            </p>
+
+            <h1>
+                Edit Movie
+            </h1>
+
+            <p>
+                Update the information for
+                <strong th:text="${movie.title}">
+                    Movie Title
+                </strong>.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="filters-section">
+
+        <div class="section-container">
+
+            <div class="section-heading centered">
+
+                <p class="section-label">
+                    MOVIE INFORMATION
+                </p>
+
+                <h2>
+                    Update Movie
+                </h2>
+
+                <p>
+                    Change the movie information below
+                    and save your updates.
+                </p>
+
+            </div>
+
+
+            <form
+                    th:action="@{/movies/update/{id}(id=${movie.id})}"
+                    method="post"
+                    class="movie-form">
+
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Movie Title
+                    </label>
+
+                    <input
+                            id="title"
+                            type="text"
+                            name="title"
+                            th:value="${movie.title}"
+                            placeholder="Enter movie title"
+                            required
+                            maxlength="150">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="genre">
+                        Genre
+                    </label>
+
+                    <input
+                            id="genre"
+                            type="text"
+                            name="genre"
+                            th:value="${movie.genre}"
+                            placeholder="e.g. Action, Drama, Thriller"
+                            required
+                            maxlength="80">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="year">
+                        Release Year
+                    </label>
+
+                    <input
+                            id="year"
+                            type="number"
+                            name="year"
+                            th:value="${movie.year}"
+                            placeholder="e.g. 2024"
+                            min="1900"
+                            max="2100"
+                            required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="rating">
+                        Rating
+                    </label>
+
+                    <input
+                            id="rating"
+                            type="number"
+                            name="rating"
+                            th:value="${movie.rating}"
+                            placeholder="e.g. 8.5"
+                            min="0"
+                            max="10"
+                            step="0.1"
+                            required>
+
+                </div>
+
+
+                <div class="form-group form-group-full">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                            id="description"
+                            name="description"
+                            rows="6"
+                            placeholder="Enter a short movie description..."
+                            required
+                            maxlength="1000"
+                            th:text="${movie.description}"></textarea>
+
+                </div>
+
+
+                <div class="form-checkbox">
+
+                    <input
+                            id="favorite"
+                            type="checkbox"
+                            name="favorite"
+                            th:checked="${movie.favorite}">
+
+                    <label for="favorite">
+                        Add this movie to favorites
+                    </label>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                            type="submit"
+                            class="primary-button">
+
+                        Save Changes
+
+                    </button>
+
+                    <a
+                            th:href="@{/movies/{id}(id=${movie.id})}"
+                            class="secondary-button">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-content">
+
+
+        <div class="footer-brand">
+
+            <a href="/"
+               class="logo">
+
+                Cine<span>Verse</span>
+
+            </a>
+
+            <p>
+                Discover movies. Find stories.
+                Create your watchlist.
+            </p>
+
+        </div>
+
+
+        <nav class="footer-navigation"
+             aria-label="Footer navigation">
+
+            <h2>
+                Explore
+            </h2>
+
+            <ul>
+
+                <li>
+                    <a href="/">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/movies">
+                        Movies
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/top-rated">
+                        Top Rated
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/favorites">
+                        Favorites
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+        <div class="footer-info">
+
+            <h2>
+                CineVerse
+            </h2>
+
+            <p>
+                A modern movie discovery platform
+                built with Spring Boot and MySQL.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CineVerse. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+</body>
+
+</html>

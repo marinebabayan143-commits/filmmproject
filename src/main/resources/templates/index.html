@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CineVerse - Discover Your Next Favorite Movie</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+    <meta name="description"
+          content="Discover movies on CineVerse. Explore films by genre, rating and release year and find your next favorite movie.">
+
+    <meta name="keywords"
+          content="movies, films, cinema, movie discovery, movie ratings, movie genres, CineVerse">
+
+    <meta name="robots"
+          content="index, follow">
+
+    <meta name="author"
+          content="CineVerse">
+
+    <link rel="canonical"
+          href="http://localhost:8082/">
+
+    <meta property="og:type"
+          content="website">
+
+    <meta property="og:title"
+          content="CineVerse - Discover Your Next Favorite Movie">
+
+    <meta property="og:description"
+          content="Explore movies, discover new stories and find your next favorite film on CineVerse.">
+
+    <meta property="og:url"
+          content="http://localhost:8082/">
+
+    <meta property="og:site_name"
+          content="CineVerse">
+
+    <meta name="twitter:card"
+          content="summary_large_image">
+
+    <meta name="twitter:title"
+          content="CineVerse - Discover Movies">
+
+    <meta name="twitter:description"
+          content="Explore movies, ratings and genres on CineVerse.">
+
+</head>
+
+<body>
+
+<header>
+
+    <nav class="navbar"
+         aria-label="Main navigation">
+
+        <a href="/"
+           class="logo"
+           aria-label="CineVerse home">
+
+            Cine<span>Verse</span>
+
+        </a>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="/">Home</a>
+            </li>
+
+            <li>
+                <a href="/movies">Movies</a>
+            </li>
+
+            <li>
+                <a href="/top-rated">Top Rated</a>
+            </li>
+
+            <li>
+                <a href="/favorites">Favorites</a>
+            </li>
+
+            <li>
+                <a href="/about">About</a>
+            </li>
+
+        </ul>
+
+        <a href="/movies"
+           class="nav-button">
+            Explore Movies
+        </a>
+
+    </nav>
+
+</header>
+
+<main>
+
+    <!-- HERO -->
+
+    <section class="hero"
+             aria-labelledby="hero-title">
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+
+            <p class="hero-label">
+                YOUR MOVIE DISCOVERY PLATFORM
+            </p>
+
+            <h1 id="hero-title">
+                Discover Your Next Favorite Movie
+            </h1>
+
+            <p class="hero-description">
+                Explore unforgettable stories, discover new films,
+                compare ratings and find movies worth watching.
+            </p>
+
+            <div class="hero-actions">
+
+                <a href="/movies"
+                   class="primary-button">
+                    Explore Movies
+                </a>
+
+                <a href="/top-rated"
+                   class="secondary-button">
+                    Top Rated
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SEARCH -->
+
+    <section class="search-section"
+             aria-labelledby="search-title">
+
+        <div class="section-container">
+
+            <div class="section-heading">
+
+                <p class="section-label">
+                    FIND YOUR NEXT FILM
+                </p>
+
+                <h2 id="search-title">
+                    Search Movies
+                </h2>
+
+            </div>
+
+            <form action="/movies"
+                  method="get"
+                  class="home-search">
+
+                <label for="home-search">
+                    Search by movie title
+                </label>
+
+                <div class="search-input-wrapper">
+
+                    <input
+                            id="home-search"
+                            type="search"
+                            name="search"
+                            placeholder="Search for a movie..."
+                            autocomplete="off">
+
+                    <button type="submit"
+                            class="search-button">
+                        Search
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- FEATURED MOVIES -->
+
+    <section class="movies-section"
+             aria-labelledby="featured-title">
+
+        <div class="section-container">
+
+            <div class="section-header">
+
+                <div>
+
+                    <p class="section-label">
+                        EXPLORE OUR COLLECTION
+                    </p>
+
+                    <h2 id="featured-title">
+                        Featured Movies
+                    </h2>
+
+                </div>
+
+                <a href="/movies"
+                   class="section-link">
+
+                    View All Movies
+
+                    <span aria-hidden="true">
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <div class="movie-grid">
+
+                <article class="movie-card"
+                         th:each="movie : ${movies}">
+
+                    <!-- MOVIE POSTER -->
+
+                    <div class="movie-poster">
+
+                        <img th:src="${'/images/' + movie.imageUrl}"
+                             th:alt="${movie.title + ' movie poster'}"
+                             th:class="${movie.title == 'The Dark Knight'} ? 'movie-poster-image dark-knight-poster' : 'movie-poster-image'">
+
+                    </div>
+
+
+                    <!-- RATING -->
+
+                    <div class="rating-badge">
+
+                        <span aria-hidden="true">
+                            ★
+                        </span>
+
+                        <span th:text="${movie.rating}">
+                            8.5
+                        </span>
+
+                    </div>
+
+
+                    <!-- FAVORITE -->
+
+                    <form th:action="@{/movies/{id}/favorite(id=${movie.id})}"
+                          method="post"
+                          class="favorite-form">
+
+                        <input type="hidden"
+                               name="redirect"
+                               value="/">
+
+                        <button type="submit"
+                                class="favorite-button"
+                                th:aria-label="${movie.favorite}
+                                    ? 'Remove ' + movie.title + ' from favorites'
+                                    : 'Add ' + movie.title + ' to favorites'">
+
+                            <span th:text="${movie.favorite ? '♥' : '♡'}"
+                                  aria-hidden="true">
+                                ♡
+                            </span>
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- MOVIE CONTENT -->
+
+                    <div class="movie-content">
+
+                        <div class="movie-meta">
+
+                            <span class="genre-badge"
+                                  th:text="${movie.genre}">
+                                Genre
+                            </span>
+
+                            <span class="movie-year"
+                                  th:text="${movie.year}">
+                                2026
+                            </span>
+
+                        </div>
+
+                        <h3>
+
+                            <a th:href="@{/movies/{id}(id=${movie.id})}"
+                               th:text="${movie.title}">
+
+                                Movie Title
+
+                            </a>
+
+                        </h3>
+
+                        <p class="movie-description"
+                           th:text="${movie.description}">
+
+                            Movie description.
+
+                        </p>
+
+                        <a th:href="@{/movies/{id}(id=${movie.id})}"
+                           class="details-button">
+
+                            View Details
+
+                            <span aria-hidden="true">
+                                →
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- EMPTY STATE -->
+
+            <div class="empty-state"
+                 th:if="${#lists.isEmpty(movies)}">
+
+                <div class="empty-icon"
+                     aria-hidden="true">
+                    🎬
+                </div>
+
+                <h3>
+                    No movies available yet
+                </h3>
+
+                <p>
+                    Our movie collection is being prepared.
+                    Check back soon for new films.
+                </p>
+
+                <a href="/movies"
+                   class="primary-button">
+                    Browse Movies
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- WHY CINEVERSE -->
+
+    <section class="features-section"
+             aria-labelledby="features-title">
+
+        <div class="section-container">
+
+            <div class="section-heading centered">
+
+                <p class="section-label">
+                    WHY CINEVERSE
+                </p>
+
+                <h2 id="features-title">
+                    Everything You Need to Discover Movies
+                </h2>
+
+                <p>
+                    A simple and modern way to explore films,
+                    discover highly rated movies and keep track
+                    of your favorites.
+                </p>
+
+            </div>
+
+
+            <div class="features-grid">
+
+                <article class="feature-card">
+
+                    <div class="feature-icon"
+                         aria-hidden="true">
+                        🔎
+                    </div>
+
+                    <h3>
+                        Discover
+                    </h3>
+
+                    <p>
+                        Search through our movie collection
+                        and discover films across different genres.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon"
+                         aria-hidden="true">
+                        ⭐
+                    </div>
+
+                    <h3>
+                        Top Rated
+                    </h3>
+
+                    <p>
+                        Explore highly rated movies and find
+                        stories that are worth watching.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon"
+                         aria-hidden="true">
+                        ♥
+                    </div>
+
+                    <h3>
+                        Favorites
+                    </h3>
+
+                    <p>
+                        Save movies you love and easily return
+                        to them whenever you want.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="footer-content">
+
+        <div class="footer-brand">
+
+            <a href="/"
+               class="logo">
+
+                Cine<span>Verse</span>
+
+            </a>
+
+            <p>
+                Discover movies. Find stories.
+                Create your watchlist.
+            </p>
+
+        </div>
+
+
+        <nav class="footer-navigation"
+             aria-label="Footer navigation">
+
+            <h2>
+                Explore
+            </h2>
+
+            <ul>
+
+                <li>
+                    <a href="/">Home</a>
+                </li>
+
+                <li>
+                    <a href="/movies">Movies</a>
+                </li>
+
+                <li>
+                    <a href="/top-rated">Top Rated</a>
+                </li>
+
+                <li>
+                    <a href="/favorites">Favorites</a>
+                </li>
+
+                <li>
+                    <a href="/about">About</a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+        <div class="footer-info">
+
+            <h2>
+                CineVerse
+            </h2>
+
+            <p>
+                A modern movie discovery platform
+                built with Spring Boot and MySQL.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CineVerse. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+</body>
+
+</html>

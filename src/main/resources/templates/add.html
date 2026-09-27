@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Movie - CineVerse</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+    <meta name="description"
+          content="Add a new movie to the CineVerse movie collection.">
+
+    <meta name="robots"
+          content="noindex, nofollow">
+
+    <link rel="canonical"
+          href="http://localhost:8082/movies/add">
+
+
+
+</head>
+
+<body>
+
+<header>
+
+    <nav class="navbar"
+         aria-label="Main navigation">
+
+        <a href="/"
+           class="logo"
+           aria-label="CineVerse home">
+
+            Cine<span>Verse</span>
+
+        </a>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="/">Home</a>
+            </li>
+
+            <li>
+                <a href="/movies">Movies</a>
+            </li>
+
+            <li>
+                <a href="/top-rated">Top Rated</a>
+            </li>
+
+            <li>
+                <a href="/favorites">Favorites</a>
+            </li>
+
+        </ul>
+
+        <a href="/movies"
+           class="nav-button">
+
+            Explore Movies
+
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <section class="page-hero">
+
+        <div class="page-hero-content">
+
+            <p class="hero-label">
+                CINEVERSE ADMIN
+            </p>
+
+            <h1>
+                Add a Movie
+            </h1>
+
+            <p>
+                Add a new movie to your CineVerse collection.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="filters-section">
+
+        <div class="section-container">
+
+            <div class="section-heading centered">
+
+                <p class="section-label">
+                    MOVIE INFORMATION
+                </p>
+
+                <h2>
+                    Create Movie
+                </h2>
+
+                <p>
+                    Enter the movie information below.
+                </p>
+
+            </div>
+
+
+            <form action="/movies/add"
+                  method="post"
+                  class="movie-form">
+
+
+                <!-- TITLE -->
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Movie Title
+                    </label>
+
+                    <input
+                            id="title"
+                            type="text"
+                            name="title"
+                            placeholder="Enter movie title"
+                            required
+                            maxlength="150">
+
+                </div>
+
+
+                <!-- GENRE -->
+
+                <div class="form-group">
+
+                    <label for="genre">
+                        Genre
+                    </label>
+
+                    <input
+                            id="genre"
+                            type="text"
+                            name="genre"
+                            placeholder="e.g. Action, Drama, Thriller"
+                            required
+                            maxlength="80">
+
+                </div>
+
+
+                <!-- YEAR -->
+
+                <div class="form-group">
+
+                    <label for="year">
+                        Release Year
+                    </label>
+
+                    <input
+                            id="year"
+                            type="number"
+                            name="year"
+                            placeholder="e.g. 2024"
+                            min="1900"
+                            max="2100"
+                            required>
+
+                </div>
+
+
+                <!-- RATING -->
+
+                <div class="form-group">
+
+                    <label for="rating">
+                        Rating
+                    </label>
+
+                    <input
+                            id="rating"
+                            type="number"
+                            name="rating"
+                            placeholder="e.g. 8.5"
+                            min="0"
+                            max="10"
+                            step="0.1"
+                            required>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group form-group-full">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                            id="description"
+                            name="description"
+                            rows="6"
+                            placeholder="Enter a short movie description..."
+                            required
+                            maxlength="1000"></textarea>
+
+                </div>
+
+
+                <!-- FAVORITE -->
+
+                <div class="form-checkbox">
+
+                    <input
+                            id="favorite"
+                            type="checkbox"
+                            name="favorite">
+
+                    <label for="favorite">
+                        Add this movie to favorites
+                    </label>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="form-actions">
+
+                    <button
+                            type="submit"
+                            class="primary-button">
+
+                        Add Movie
+
+                    </button>
+
+                    <a href="/movies"
+                       class="secondary-button">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-content">
+
+        <div class="footer-brand">
+
+            <a href="/"
+               class="logo">
+
+                Cine<span>Verse</span>
+
+            </a>
+
+            <p>
+                Discover movies. Find stories.
+                Create your watchlist.
+            </p>
+
+        </div>
+
+
+        <nav class="footer-navigation"
+             aria-label="Footer navigation">
+
+            <h2>
+                Explore
+            </h2>
+
+            <ul>
+
+                <li>
+                    <a href="/">Home</a>
+                </li>
+
+                <li>
+                    <a href="/movies">Movies</a>
+                </li>
+
+                <li>
+                    <a href="/top-rated">Top Rated</a>
+                </li>
+
+                <li>
+                    <a href="/favorites">Favorites</a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+        <div class="footer-info">
+
+            <h2>
+                CineVerse
+            </h2>
+
+            <p>
+                A modern movie discovery platform
+                built with Spring Boot and MySQL.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CineVerse. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+</body>
+</html>

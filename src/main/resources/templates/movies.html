@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Movies - CineVerse</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <meta name="description"
+          content="Browse and discover movies on CineVerse. Search films, filter by genre, year and rating, and find your next movie to watch.">
+
+    <meta name="keywords"
+          content="movies, films, cinema, movie collection, movie search, movie ratings, CineVerse">
+
+    <meta name="robots"
+          content="index, follow">
+
+    <meta name="author"
+          content="CineVerse">
+
+    <link rel="canonical"
+          href="http://localhost:8082/movies">
+
+    <meta property="og:type"
+          content="website">
+
+    <meta property="og:title"
+          content="Movies - CineVerse">
+
+    <meta property="og:description"
+          content="Browse, search and filter movies on CineVerse.">
+
+    <meta property="og:url"
+          content="http://localhost:8082/movies">
+
+    <meta property="og:site_name"
+          content="CineVerse">
+
+    <meta name="twitter:card"
+          content="summary">
+
+    <meta name="twitter:title"
+          content="Movies - CineVerse">
+
+    <meta name="twitter:description"
+          content="Browse and discover movies on CineVerse.">
+
+
+
+</head>
+
+<body>
+
+<header>
+
+    <nav class="navbar"
+         aria-label="Main navigation">
+
+        <a href="/"
+           class="logo"
+           aria-label="CineVerse home">
+
+            Cine<span>Verse</span>
+
+        </a>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="/">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="/movies"
+                   class="active">
+                    Movies
+                </a>
+            </li>
+
+            <li>
+                <a href="/top-rated">
+                    Top Rated
+                </a>
+            </li>
+
+            <li>
+                <a href="/favorites">
+                    Favorites
+                </a>
+            </li>
+
+
+            <li>
+                <a href="/about">
+                    About
+                </a>
+            </li>
+
+        </ul>
+
+        <a href="/movies"
+           class="nav-button">
+
+            Explore Movies
+
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <!-- PAGE HERO -->
+
+    <section class="page-hero">
+
+        <div class="page-hero-content">
+
+            <p class="hero-label">
+                CINEVERSE COLLECTION
+            </p>
+
+            <h1>
+                Explore Movies
+            </h1>
+
+            <p>
+                Search, filter and discover movies
+                that match your interests.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- FILTER SECTION -->
+
+    <section class="filters-section"
+             aria-labelledby="filters-title">
+
+        <div class="section-container">
+
+            <div class="section-heading">
+
+                <p class="section-label">
+                    FIND YOUR MOVIE
+                </p>
+
+                <h2 id="filters-title">
+                    Search & Filter
+                </h2>
+
+            </div>
+
+
+            <form action="/movies"
+                  method="get"
+                  class="movie-filters">
+
+                <!-- SEARCH -->
+
+                <div class="filter-group">
+
+                    <label for="search">
+                        Movie Title
+                    </label>
+
+                    <input
+                            id="search"
+                            type="search"
+                            name="search"
+                            th:value="${search}"
+                            placeholder="Search by title..."
+                            autocomplete="off">
+
+                </div>
+
+
+                <!-- GENRE -->
+
+                <div class="filter-group">
+
+                    <label for="genre">
+                        Genre
+                    </label>
+
+                    <select id="genre"
+                            name="genre">
+
+                        <option value="">
+                            All Genres
+                        </option>
+
+                        <option value="Action"
+                                th:selected="${genre == 'Action'}">
+                            Action
+                        </option>
+
+                        <option value="Drama"
+                                th:selected="${genre == 'Drama'}">
+                            Drama
+                        </option>
+
+                        <option value="Science Fiction"
+                                th:selected="${genre == 'Science Fiction'}">
+                            Science Fiction
+                        </option>
+
+                        <option value="Thriller"
+                                th:selected="${genre == 'Thriller'}">
+                            Thriller
+                        </option>
+
+                        <option value="Comedy"
+                                th:selected="${genre == 'Comedy'}">
+                            Comedy
+                        </option>
+
+                        <option value="Horror"
+                                th:selected="${genre == 'Horror'}">
+                            Horror
+                        </option>
+
+                        <option value="Romance"
+                                th:selected="${genre == 'Romance'}">
+                            Romance
+                        </option>
+
+                        <option value="Animation"
+                                th:selected="${genre == 'Animation'}">
+                            Animation
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- YEAR -->
+
+                <div class="filter-group">
+
+                    <label for="year">
+                        Release Year
+                    </label>
+
+                    <input
+                            id="year"
+                            type="number"
+                            name="year"
+                            th:value="${year}"
+                            placeholder="e.g. 2024"
+                            min="1900"
+                            max="2100">
+
+                </div>
+
+
+                <!-- RATING -->
+
+                <div class="filter-group">
+
+                    <label for="minRating">
+                        Minimum Rating
+                    </label>
+
+                    <select id="minRating"
+                            name="minRating">
+
+                        <option value="">
+                            Any Rating
+                        </option>
+
+                        <option value="9"
+                                th:selected="${minRating == 9}">
+                            9.0+
+                        </option>
+
+                        <option value="8"
+                                th:selected="${minRating == 8}">
+                            8.0+
+                        </option>
+
+                        <option value="7"
+                                th:selected="${minRating == 7}">
+                            7.0+
+                        </option>
+
+                        <option value="6"
+                                th:selected="${minRating == 6}">
+                            6.0+
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SORT -->
+
+                <div class="filter-group">
+
+                    <label for="sort">
+                        Sort By
+                    </label>
+
+                    <select id="sort"
+                            name="sort">
+
+                        <option value=""
+                                th:selected="${sort == ''}">
+                            Default
+                        </option>
+
+                        <option value="rating"
+                                th:selected="${sort == 'rating'}">
+                            Highest Rated
+                        </option>
+
+                        <option value="year"
+                                th:selected="${sort == 'year'}">
+                            Newest
+                        </option>
+
+                        <option value="title"
+                                th:selected="${sort == 'title'}">
+                            Title A-Z
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- FILTER BUTTONS -->
+
+                <div class="filter-actions">
+
+                    <button type="submit"
+                            class="primary-button">
+
+                        Apply Filters
+
+                    </button>
+
+                    <a href="/movies"
+                       class="secondary-button">
+
+                        Clear
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- MOVIES -->
+
+    <section class="movies-section"
+             aria-labelledby="movies-title">
+
+        <div class="section-container">
+
+            <div class="section-header">
+
+                <div>
+
+                    <p class="section-label">
+                        MOVIE COLLECTION
+                    </p>
+
+                    <h2 id="movies-title">
+                        All Movies
+                    </h2>
+
+                </div>
+
+
+                <div class="section-header-actions">
+
+                    <span class="results-count"
+                          th:text="${#lists.size(movies)} + ' movies'">
+
+                        0 movies
+
+                    </span>
+
+                    <a href="/movies/add"
+                       class="add-movie-button">
+
+                        + Add Movie
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- MOVIE GRID -->
+
+            <div class="movie-grid">
+
+                <article class="movie-card"
+                         th:each="movie : ${movies}">
+
+
+                    <!-- POSTER -->
+
+                    <div class="movie-poster">
+
+                        <div class="poster-placeholder">
+
+                            <span aria-hidden="true">
+                                🎬
+                            </span>
+
+                        </div>
+
+
+                        <!-- RATING -->
+
+                        <div class="rating-badge">
+
+                            <span aria-hidden="true">
+                                ★
+                            </span>
+
+                            <span th:text="${movie.rating}">
+                                8.5
+                            </span>
+
+                        </div>
+
+
+                        <!-- FAVORITE -->
+
+                        <form
+                                th:action="@{/movies/{id}/favorite(id=${movie.id})}"
+                                method="post"
+                                class="favorite-form">
+
+                            <input
+                                    type="hidden"
+                                    name="redirect"
+                                    value="/movies">
+
+                            <button
+                                    type="submit"
+                                    class="favorite-button"
+                                    th:aria-label="${movie.favorite ? 'Remove ' + movie.title + ' from favorites' : 'Add ' + movie.title + ' to favorites'}">
+
+                                <span
+                                        th:text="${movie.favorite ? '♥' : '♡'}"
+                                        aria-hidden="true">
+                                    ♡
+                                </span>
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- MOVIE CONTENT -->
+
+                    <div class="movie-content">
+
+                        <div class="movie-meta">
+
+                            <span class="genre-badge"
+                                  th:text="${movie.genre}">
+
+                                Genre
+
+                            </span>
+
+                            <span class="movie-year"
+                                  th:text="${movie.year}">
+
+                                2026
+
+                            </span>
+
+                        </div>
+
+
+                        <h3>
+
+                            <a
+                                    th:href="@{/movies/{id}(id=${movie.id})}"
+                                    th:text="${movie.title}">
+
+                                Movie Title
+
+                            </a>
+
+                        </h3>
+
+
+                        <p class="movie-description"
+                           th:text="${movie.description}">
+
+                            Movie description.
+
+                        </p>
+
+
+                        <!-- VIEW DETAILS -->
+
+                        <a
+                                th:href="@{/movies/{id}(id=${movie.id})}"
+                                class="details-button">
+
+                            View Details
+
+                            <span aria-hidden="true">
+                                →
+                            </span>
+
+                        </a>
+
+
+                        <!-- EDIT / DELETE -->
+
+                        <div class="movie-actions">
+
+                            <a
+                                    th:href="@{/movies/edit/{id}(id=${movie.id})}"
+                                    class="edit-button">
+
+                                Edit
+
+                            </a>
+
+
+                            <form
+                                    th:action="@{/movies/delete/{id}(id=${movie.id})}"
+                                    method="post"
+                                    onsubmit="return confirm('Are you sure you want to delete this movie?');">
+
+                                <button
+                                        type="submit"
+                                        class="delete-button">
+
+                                    Delete
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- EMPTY STATE -->
+
+            <div
+                    class="empty-state"
+                    th:if="${#lists.isEmpty(movies)}">
+
+                <div class="empty-icon"
+                     aria-hidden="true">
+
+                    🎬
+
+                </div>
+
+                <h3>
+                    No Movies Found
+                </h3>
+
+                <p>
+                    We couldn't find any movies matching
+                    your search or filters.
+                </p>
+
+                <a href="/movies"
+                   class="primary-button">
+
+                    View All Movies
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="footer-content">
+
+        <div class="footer-brand">
+
+            <a href="/"
+               class="logo">
+
+                Cine<span>Verse</span>
+
+            </a>
+
+            <p>
+                Discover movies. Find stories.
+                Create your watchlist.
+            </p>
+
+        </div>
+
+
+        <nav class="footer-navigation"
+             aria-label="Footer navigation">
+
+            <h2>
+                Explore
+            </h2>
+
+            <ul>
+
+                <li>
+                    <a href="/">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/movies">
+                        Movies
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/top-rated">
+                        Top Rated
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/favorites">
+                        Favorites
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+        <div class="footer-info">
+
+            <h2>
+                CineVerse
+            </h2>
+
+            <p>
+                A modern movie discovery platform
+                built with Spring Boot and MySQL.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 CineVerse. All rights reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+</body>
+</html>
+
