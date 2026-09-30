@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.Column;
 @Entity
 public class Movie {
 
@@ -16,7 +16,7 @@ public class Movie {
     private String title;
 
     private String genre;
-
+@Column(name="movie_year")
     private int year;
 
     private double rating;

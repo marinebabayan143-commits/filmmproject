@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
@@ -12,6 +13,7 @@
     <title>Movies - CineVerse</title>
 
     <link rel="stylesheet" th:href="@{/style.css}">
+
     <meta name="description"
           content="Browse and discover movies on CineVerse. Search films, filter by genre, year and rating, and find your next movie to watch.">
 
@@ -50,8 +52,6 @@
 
     <meta name="twitter:description"
           content="Browse and discover movies on CineVerse.">
-
-
 
 </head>
 
@@ -96,7 +96,6 @@
                     Favorites
                 </a>
             </li>
-
 
             <li>
                 <a href="/about">
@@ -425,13 +424,55 @@
 
                     <div class="movie-poster">
 
-                        <div class="poster-placeholder">
+                        <!-- THE DARK KNIGHT -->
+                        <img th:if="${movie.title == 'The Dark Knight'}"
+                             src="/images/the-dark-knight.webp"
+                             alt="The Dark Knight poster">
 
-                            <span aria-hidden="true">
-                                🎬
-                            </span>
+                        <!-- INTERSTELLAR -->
+                        <img th:if="${movie.title == 'Interstellar'}"
+                             src="/images/interstellar.jfif"
+                             alt="Interstellar poster">
 
-                        </div>
+                        <!-- INCEPTION -->
+                        <img th:if="${movie.title == 'Inception'}"
+                             src="/images/inception.jfif"
+                             alt="Inception poster">
+
+                        <!-- THE SHAWSHANK REDEMPTION -->
+                        <img th:if="${movie.title == 'The Shawshank Redemption'}"
+                             src="/images/shawshank-redemption.jfif"
+                             alt="The Shawshank Redemption poster">
+
+                        <!-- GLADIATOR -->
+                        <img th:if="${movie.title == 'Gladiator'}"
+                             src="/images/gladiator.jfif"
+                             alt="Gladiator poster">
+
+                        <!-- THE MATRIX -->
+                        <img th:if="${movie.title == 'The Matrix'}"
+                             src="/images/the-matrix.jfif"
+                             alt="The Matrix poster">
+
+                        <!-- PARASITE -->
+                        <img th:if="${movie.title == 'Parasite'}"
+                             src="/images/parasite.jfif"
+                             alt="Parasite poster">
+
+                        <!-- WHIPLASH -->
+                        <img th:if="${movie.title == 'Whiplash'}"
+                             src="/images/whiplash.jfif"
+                             alt="Whiplash poster">
+
+                        <!-- DUNE -->
+                        <img th:if="${movie.title == 'Dune'}"
+                             src="/images/dune.jfif"
+                             alt="Dune poster">
+
+                        <!-- OPPENHEIMER -->
+                        <img th:if="${movie.title == 'Oppenheimer'}"
+                             src="/images/oppenheimer.jfif"
+                             alt="Oppenheimer poster">
 
 
                         <!-- RATING -->
@@ -703,4 +744,3 @@
 
 </body>
 </html>
-
