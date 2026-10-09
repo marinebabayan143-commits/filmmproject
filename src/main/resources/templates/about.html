@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en"
+<html th:lang="${#locale.language}" lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -11,11 +11,11 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>About CineVerse - Movie Discovery Platform</title>
+    <title th:text="#{about.title}">About CineVerse - Movie Discovery Platform</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 
     <meta name="description"
-          content="Learn more about CineVerse, a modern movie discovery platform designed to help you explore films, discover new stories and find your next favorite movie.">
+          th:content="#{about.metaDescription}" content="Learn more about CineVerse, a modern movie discovery platform designed to help you explore films, discover new stories and find your next favorite movie.">
 
     <meta name="robots"
           content="index, follow">
@@ -67,11 +67,11 @@
 
 
     <nav class="navbar"
-         aria-label="Main navigation">
+         aria-label="Main navigation" th:aria-label="#{nav.mainAria}">
 
         <a href="/"
            class="logo"
-           aria-label="CineVerse home">
+           aria-label="CineVerse home" th:aria-label="#{nav.homeAria}">
 
             Cine<span>Verse</span>
 
@@ -81,32 +81,32 @@
         <ul class="nav-links">
 
             <li>
-                <a href="/">
+                <a href="/" th:text="#{nav.home}">
                     Home
                 </a>
             </li>
 
             <li>
-                <a href="/movies">
+                <a href="/movies" th:text="#{nav.movies}">
                     Movies
                 </a>
             </li>
 
             <li>
-                <a href="/top-rated">
+                <a href="/top-rated" th:text="#{nav.topRated}">
                     Top Rated
                 </a>
             </li>
 
             <li>
-                <a href="/favorites">
+                <a href="/favorites" th:text="#{nav.favorites}">
                     Favorites
                 </a>
             </li>
 
             <li>
                 <a href="/about"
-                   aria-current="page">
+                   aria-current="page" th:text="#{nav.about}">
                     About
                 </a>
             </li>
@@ -115,13 +115,20 @@
 
 
         <a href="/movies"
-           class="nav-button">
+           class="nav-button" th:text="#{home.explore}">
 
             Explore Movies
 
         </a>
 
-    </nav>
+    
+        <div class="language-switcher" aria-label="Language selector">
+            <a href="?lang=hy"
+               th:classappend="${#locale.language == 'hy'} ? ' active' : ''">🇦🇲 Հայերեն</a>
+            <a href="?lang=en"
+               th:classappend="${#locale.language == 'en'} ? ' active' : ''">🇬🇧 English</a>
+        </div>
+</nav>
 
 
 </header>
@@ -139,17 +146,17 @@
 
         <div class="hero-content">
 
-            <p class="hero-label">
+            <p class="hero-label" th:text="#{about.heroLabel}">
                 ABOUT CINEVERSE
             </p>
 
 
-            <h1 id="about-title">
+            <h1 id="about-title" th:text="#{about.heroHeading}">
                 Discover Stories Worth Watching
             </h1>
 
 
-            <p class="hero-description">
+            <p class="hero-description" th:text="#{about.heroDescription}">
 
                 CineVerse is a modern movie discovery platform
                 created to make exploring films simple,
@@ -161,7 +168,7 @@
             <div class="hero-actions">
 
                 <a href="/movies"
-                   class="primary-button">
+                   class="primary-button" th:text="#{home.explore}">
 
                     Explore Movies
 
@@ -169,7 +176,7 @@
 
 
                 <a href="/top-rated"
-                   class="secondary-button">
+                   class="secondary-button" th:text="#{about.viewTopRated}">
 
                     View Top Rated
 
@@ -192,17 +199,17 @@
 
             <div class="section-heading centered">
 
-                <p class="section-label">
+                <p class="section-label" th:text="#{about.platformLabel}">
                     OUR PLATFORM
                 </p>
 
 
-                <h2 id="about-section-title">
+                <h2 id="about-section-title" th:text="#{about.whatIs}">
                     What Is CineVerse?
                 </h2>
 
 
-                <p>
+                <p th:text="#{about.whatIsDescription}">
 
                     CineVerse helps movie lovers discover
                     films through a clean and simple interface.
@@ -227,12 +234,12 @@
                     </div>
 
 
-                    <h3>
+                    <h3 th:text="#{about.discoverMovies}">
                         Discover Movies
                     </h3>
 
 
-                    <p>
+                    <p th:text="#{about.discoverMoviesDescription}">
 
                         Explore a collection of movies and
                         discover films from different genres
@@ -252,12 +259,12 @@
                     </div>
 
 
-                    <h3>
+                    <h3 th:text="#{about.exploreRatings}">
                         Explore Ratings
                     </h3>
 
 
-                    <p>
+                    <p th:text="#{about.exploreRatingsDescription}">
 
                         Find highly rated movies and compare
                         ratings to help you discover stories
@@ -277,12 +284,12 @@
                     </div>
 
 
-                    <h3>
+                    <h3 th:text="#{about.saveFavorites}">
                         Save Favorites
                     </h3>
 
 
-                    <p>
+                    <p th:text="#{about.saveFavoritesDescription}">
 
                         Keep your favorite movies together
                         so you can easily return to them
@@ -310,17 +317,17 @@
 
             <div class="section-heading centered">
 
-                <p class="section-label">
+                <p class="section-label" th:text="#{about.technologyLabel}">
                     TECHNOLOGY
                 </p>
 
 
-                <h2 id="technology-title">
+                <h2 id="technology-title" th:text="#{about.technologyHeading}">
                     Built With Modern Technologies
                 </h2>
 
 
-                <p>
+                <p th:text="#{about.technologyDescription}">
 
                     CineVerse is built as a modern web application
                     using technologies designed for reliable
@@ -342,12 +349,12 @@
                     </div>
 
 
-                    <h3>
+                    <h3 th:text="#{about.springBoot}">
                         Spring Boot
                     </h3>
 
 
-                    <p>
+                    <p th:text="#{about.springBootDescription}">
 
                         Used to build the backend,
                         controllers and application logic.
@@ -366,12 +373,12 @@
                     </div>
 
 
-                    <h3>
+                    <h3 th:text="#{about.mysql}">
                         MySQL
                     </h3>
 
 
-                    <p>
+                    <p th:text="#{about.mysqlDescription}">
 
                         Used to store movie information,
                         ratings, genres and favorite status.
@@ -390,12 +397,12 @@
                     </div>
 
 
-                    <h3>
+                    <h3 th:text="#{about.htmlCss}">
                         HTML & CSS
                     </h3>
 
 
-                    <p>
+                    <p th:text="#{about.htmlCssDescription}">
 
                         Used to create the responsive,
                         accessible and modern user interface.
@@ -422,17 +429,17 @@
 
             <div class="section-heading centered">
 
-                <p class="section-label">
+                <p class="section-label" th:text="#{about.ctaLabel}">
                     START EXPLORING
                 </p>
 
 
-                <h2 id="cta-title">
+                <h2 id="cta-title" th:text="#{about.ctaHeading}">
                     Find Your Next Favorite Movie
                 </h2>
 
 
-                <p>
+                <p th:text="#{about.ctaDescription}">
 
                     Explore the CineVerse collection and
                     discover stories that are worth watching.
@@ -443,7 +450,7 @@
                 <div class="hero-actions">
 
                     <a href="/movies"
-                       class="primary-button">
+                       class="primary-button" th:text="#{home.browseMovies}">
 
                         Browse Movies
 
@@ -478,7 +485,7 @@
             </a>
 
 
-            <p>
+            <p th:text="#{footer.description}">
 
                 Discover movies. Find stories.
                 Create your watchlist.
@@ -490,9 +497,9 @@
 
 
         <nav class="footer-navigation"
-             aria-label="Footer navigation">
+             aria-label="Footer navigation" th:aria-label="#{nav.footerAria}">
 
-            <h2>
+            <h2 th:text="#{footer.explore}">
                 Explore
             </h2>
 
@@ -500,31 +507,31 @@
             <ul>
 
                 <li>
-                    <a href="/">
+                    <a href="/" th:text="#{nav.home}">
                         Home
                     </a>
                 </li>
 
                 <li>
-                    <a href="/movies">
+                    <a href="/movies" th:text="#{nav.movies}">
                         Movies
                     </a>
                 </li>
 
                 <li>
-                    <a href="/top-rated">
+                    <a href="/top-rated" th:text="#{nav.topRated}">
                         Top Rated
                     </a>
                 </li>
 
                 <li>
-                    <a href="/favorites">
+                    <a href="/favorites" th:text="#{nav.favorites}">
                         Favorites
                     </a>
                 </li>
 
                 <li>
-                    <a href="/about">
+                    <a href="/about" th:text="#{nav.about}">
                         About
                     </a>
                 </li>
@@ -542,7 +549,7 @@
             </h2>
 
 
-            <p>
+            <p th:text="#{footer.info}">
 
                 A modern movie discovery platform
                 built with Spring Boot and MySQL.
@@ -558,7 +565,7 @@
 
     <div class="footer-bottom">
 
-        <p>
+        <p th:text="#{footer.copyright}">
             © 2026 CineVerse. All rights reserved.
         </p>
 

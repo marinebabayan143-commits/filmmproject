@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
+<html th:lang="${#locale.language}" lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -9,14 +9,15 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Top Rated Movies - CineVerse</title>
+    <title th:text="#{favorites.title}">Favorite Movies - CineVerse</title>
+
     <link rel="stylesheet" th:href="@{/style.css}">
 
     <meta name="description"
-          content="Discover the highest rated movies on CineVerse. Explore outstanding films and find highly rated stories worth watching.">
+          th:content="#{favorites.metaDescription}" content="View your favorite movies on CineVerse. Keep track of the films you love and easily return to them whenever you want.">
 
     <meta name="keywords"
-          content="top rated movies, best rated films, movie ratings, highest rated movies, CineVerse">
+          content="favorite movies, movie watchlist, saved movies, favorite films, CineVerse">
 
     <meta name="robots"
           content="index, follow">
@@ -25,37 +26,36 @@
           content="CineVerse">
 
     <link rel="canonical"
-          href="http://localhost:8082/top-rated">
+          href="http://localhost:8082/favorites">
 
 
-    <!-- Open Graph -->
+
 
     <meta property="og:type"
           content="website">
 
     <meta property="og:title"
-          content="Top Rated Movies - CineVerse">
+          content="Favorite Movies - CineVerse">
 
     <meta property="og:description"
-          content="Explore the highest rated movies available on CineVerse.">
+          content="View and manage your favorite movies on CineVerse.">
 
     <meta property="og:url"
-          content="http://localhost:8082/top-rated">
+          content="http://localhost:8082/favorites">
 
     <meta property="og:site_name"
           content="CineVerse">
 
 
-    <!-- Twitter / X -->
 
     <meta name="twitter:card"
           content="summary">
 
     <meta name="twitter:title"
-          content="Top Rated Movies - CineVerse">
+          content="Favorite Movies - CineVerse">
 
     <meta name="twitter:description"
-          content="Discover highly rated movies on CineVerse.">
+          content="View your favorite movies on CineVerse.">
 
 
 
@@ -67,15 +67,14 @@
 
 
 
-
 <header>
 
     <nav class="navbar"
-         aria-label="Main navigation">
+         aria-label="Main navigation" th:aria-label="#{nav.mainAria}">
 
         <a href="/"
            class="logo"
-           aria-label="CineVerse home">
+           aria-label="CineVerse home" th:aria-label="#{nav.homeAria}">
 
             Cine<span>Verse</span>
 
@@ -85,29 +84,29 @@
         <ul class="nav-links">
 
             <li>
-                <a href="/">
+                <a href="/" th:text="#{nav.home}">
                     Home
                 </a>
             </li>
 
             <li>
-                <a href="/movies">
+                <a href="/movies" th:text="#{nav.movies}">
                     Movies
                 </a>
             </li>
 
             <li>
-                <a href="/top-rated"
-                   class="active">
-
+                <a href="/top-rated" th:text="#{nav.topRated}">
                     Top Rated
-
                 </a>
             </li>
 
             <li>
-                <a href="/favorites">
+                <a href="/favorites"
+                   class="active" th:text="#{nav.favorites}">
+
                     Favorites
+
                 </a>
             </li>
 
@@ -115,12 +114,19 @@
 
 
         <a href="/movies"
-           class="nav-button">
+           class="nav-button" th:text="#{home.explore}">
 
             Explore Movies
 
         </a>
 
+
+        <div class="language-switcher" aria-label="Language selector">
+            <a href="?lang=hy"
+               th:classappend="${#locale.language == 'hy'} ? ' active' : ''">🇦🇲 Հայերեն</a>
+            <a href="?lang=en"
+               th:classappend="${#locale.language == 'en'} ? ' active' : ''">🇬🇧 English</a>
+        </div>
     </nav>
 
 </header>
@@ -138,17 +144,17 @@
 
         <div class="page-hero-content">
 
-            <p class="hero-label">
-                CINEVERSE RANKINGS
+            <p class="hero-label" th:text="#{favorites.heroLabel}">
+                YOUR COLLECTION
             </p>
 
-            <h1>
-                Top Rated Movies
+            <h1 th:text="#{favorites.heading}">
+                Favorite Movies
             </h1>
 
-            <p>
-                Explore the highest rated movies
-                in our collection.
+            <p th:text="#{favorites.description}">
+                Keep the movies you love
+                in one convenient place.
             </p>
 
         </div>
@@ -157,10 +163,10 @@
 
 
 
-    <!-- TOP MOVIES -->
+    <!-- FAVORITES -->
 
     <section class="movies-section"
-             aria-labelledby="top-rated-title">
+             aria-labelledby="favorites-title">
 
         <div class="section-container">
 
@@ -169,23 +175,23 @@
 
                 <div>
 
-                    <p class="section-label">
-                        HIGHEST RATED
+                    <p class="section-label" th:text="#{favorites.sectionLabel}">
+                        YOUR FAVORITES
                     </p>
 
-                    <h2 id="top-rated-title">
-                        Movies Worth Watching
+                    <h2 id="favorites-title" th:text="#{favorites.subheading}">
+                        Movies You Love
                     </h2>
 
                 </div>
 
 
                 <span class="results-count"
-                      th:text="${#lists.size(movies)} + ' movies'">
+                      th:text="|${#lists.size(movies)} #{movies.resultsCount}|">
 
-                    0 movies
+          0 movies
 
-                </span>
+        </span>
 
             </div>
 
@@ -196,7 +202,7 @@
             <div class="movie-grid">
 
                 <article class="movie-card"
-                         th:each="movie, stat : ${movies}">
+                         th:each="movie : ${movies}">
 
 
                     <!-- POSTER -->
@@ -213,13 +219,12 @@
                         </div>
 
 
-                        <!-- RANK -->
+                        <!-- FAVORITE BADGE -->
 
-                        <div class="movie-rank">
+                        <div class="favorite-badge"
+                             aria-label="Favorite movie">
 
-                            <span th:text="${stat.count}">
-                                1
-                            </span>
+                            ♥
 
                         </div>
 
@@ -233,13 +238,13 @@
                             </span>
 
                             <span th:text="${movie.rating}">
-                                9.0
+                                8.5
                             </span>
 
                         </div>
 
 
-                        <!-- FAVORITE -->
+                        <!-- REMOVE FAVORITE -->
 
                         <form
                                 th:action="@{/movies/{id}/favorite(id=${movie.id})}"
@@ -249,19 +254,16 @@
                             <input
                                     type="hidden"
                                     name="redirect"
-                                    value="/top-rated">
+                                    value="/favorites">
 
                             <button
                                     type="submit"
                                     class="favorite-button"
-                                    th:aria-label="${movie.favorite ? 'Remove ' + movie.title + ' from favorites' : 'Add ' + movie.title + ' to favorites'}">
+                                    th:aria-label="#{movie.removeFavorite}">
 
                                 <span
-                                        th:text="${movie.favorite ? '♥' : '♡'}"
                                         aria-hidden="true">
-
-                                    ♡
-
+                                    ♥
                                 </span>
 
                             </button>
@@ -272,7 +274,7 @@
 
 
 
-                    <!-- CONTENT -->
+                    <!-- MOVIE CONTENT -->
 
                     <div class="movie-content">
 
@@ -321,7 +323,7 @@
                                 th:href="@{/movies/{id}(id=${movie.id})}"
                                 class="details-button">
 
-                            View Details
+                            <span th:text="#{movie.viewDetails}">View Details</span>
 
                             <span aria-hidden="true">
                                 →
@@ -337,7 +339,7 @@
 
 
 
-            <!-- EMPTY STATE -->
+            <!-- EMPTY FAVORITES -->
 
             <div
                     class="empty-state"
@@ -346,26 +348,27 @@
                 <div class="empty-icon"
                      aria-hidden="true">
 
-                    ⭐
+                    ♡
 
                 </div>
 
 
-                <h3>
-                    No Rated Movies Yet
+                <h3 th:text="#{favorites.emptyTitle}">
+                    No Favorite Movies Yet
                 </h3>
 
 
-                <p>
-                    There are no movies in the collection yet.
-                    Add some movies to see the top rated list.
+                <p th:text="#{favorites.emptyDescription}">
+                    You haven't added any movies to your
+                    favorites yet. Explore the collection
+                    and save the movies you love.
                 </p>
 
 
                 <a href="/movies"
-                   class="primary-button">
+                   class="primary-button" th:text="#{home.explore}">
 
-                    Browse Movies
+                    Explore Movies
 
                 </a>
 
@@ -377,28 +380,35 @@
 
 
 
-    <!-- INFORMATION SECTION -->
+    <!-- DISCOVERY SECTION -->
 
     <section class="features-section"
-             aria-labelledby="rating-info-title">
+             aria-labelledby="favorites-info-title">
 
         <div class="section-container">
 
             <div class="section-heading centered">
 
-                <p class="section-label">
-                    CINEVERSE RATINGS
+                <p class="section-label" th:text="#{favorites.ctaLabel}">
+                    KEEP DISCOVERING
                 </p>
 
-                <h2 id="rating-info-title">
-                    Find Highly Rated Stories
+                <h2 id="favorites-info-title" th:text="#{favorites.ctaHeading}">
+                    Find More Movies
                 </h2>
 
-                <p>
-                    Movies on this page are automatically
-                    ordered by their rating, making it easier
-                    to discover highly rated films.
+                <p th:text="#{favorites.ctaDescription}">
+                    Explore the CineVerse collection and
+                    add new movies to your favorites.
                 </p>
+
+
+                <a href="/movies"
+                   class="primary-button" th:text="#{home.browseMovies}">
+
+                    Browse Movies
+
+                </a>
 
             </div>
 
@@ -427,7 +437,7 @@
 
             </a>
 
-            <p>
+            <p th:text="#{footer.description}">
                 Discover movies. Find stories.
                 Create your watchlist.
             </p>
@@ -437,39 +447,40 @@
 
 
         <nav class="footer-navigation"
-             aria-label="Footer navigation">
+             aria-label="Footer navigation" th:aria-label="#{nav.footerAria}">
 
-            <h2>
+            <h2 th:text="#{footer.explore}">
                 Explore
             </h2>
 
             <ul>
 
                 <li>
-                    <a href="/">
+                    <a href="/" th:text="#{nav.home}">
                         Home
                     </a>
                 </li>
 
                 <li>
-                    <a href="/movies">
+                    <a href="/movies" th:text="#{nav.movies}">
                         Movies
                     </a>
                 </li>
 
                 <li>
-                    <a href="/top-rated">
+                    <a href="/top-rated" th:text="#{nav.topRated}">
                         Top Rated
                     </a>
                 </li>
 
                 <li>
-                    <a href="/favorites">
+                    <a href="/favorites" th:text="#{nav.favorites}">
                         Favorites
                     </a>
                 </li>
+
                 <li>
-                    <a href="/about">
+                    <a href="/about" th:text="#{nav.about}">
                         About
                     </a>
                 </li>
@@ -485,7 +496,7 @@
                 CineVerse
             </h2>
 
-            <p>
+            <p th:text="#{footer.info}">
                 A modern movie discovery platform
                 built with Spring Boot and MySQL.
             </p>
@@ -498,7 +509,7 @@
 
     <div class="footer-bottom">
 
-        <p>
+        <p th:text="#{footer.copyright}">
             © 2026 CineVerse. All rights reserved.
         </p>
 

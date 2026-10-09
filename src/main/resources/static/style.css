@@ -1762,9 +1762,7 @@ select:focus-visible {
 }
 
 
-/* =========================================================
-   RESPONSIVE - SMALL MOBILE
-   ========================================================= */
+
 
 @media (max-width: 400px) {
 
@@ -1791,3 +1789,25 @@ select:focus-visible {
    }
 }
 
+
+
+/* Language switcher */
+.language-switcher {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.language-switcher a {
+    color: #cbd5e1;
+    transition: color 0.2s ease;
+}
+
+.language-switcher a:hover,
+.language-switcher a.active {
+    color: #38bdf8;
+}

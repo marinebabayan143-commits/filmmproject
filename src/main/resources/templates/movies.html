@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en"
+<html th:lang="${#locale.language}" lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -10,12 +9,12 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Movies - CineVerse</title>
+    <title th:text="#{movies.pageTitle}">Movies - CineVerse</title>
 
     <link rel="stylesheet" th:href="@{/style.css}">
 
     <meta name="description"
-          content="Browse and discover movies on CineVerse. Search films, filter by genre, year and rating, and find your next movie to watch.">
+          th:content="#{movies.metaDescription}" content="Browse and discover movies on CineVerse. Search films, filter by genre, year and rating, and find your next movie to watch.">
 
     <meta name="keywords"
           content="movies, films, cinema, movie collection, movie search, movie ratings, CineVerse">
@@ -60,11 +59,11 @@
 <header>
 
     <nav class="navbar"
-         aria-label="Main navigation">
+         aria-label="Main navigation" th:aria-label="#{nav.mainAria}">
 
         <a href="/"
            class="logo"
-           aria-label="CineVerse home">
+           aria-label="CineVerse home" th:aria-label="#{nav.homeAria}">
 
             Cine<span>Verse</span>
 
@@ -73,32 +72,32 @@
         <ul class="nav-links">
 
             <li>
-                <a href="/">
+                <a href="/" th:text="#{nav.home}">
                     Home
                 </a>
             </li>
 
             <li>
                 <a href="/movies"
-                   class="active">
+                   class="active" th:text="#{nav.movies}">
                     Movies
                 </a>
             </li>
 
             <li>
-                <a href="/top-rated">
+                <a href="/top-rated" th:text="#{nav.topRated}">
                     Top Rated
                 </a>
             </li>
 
             <li>
-                <a href="/favorites">
+                <a href="/favorites" th:text="#{nav.favorites}">
                     Favorites
                 </a>
             </li>
 
             <li>
-                <a href="/about">
+                <a href="/about" th:text="#{nav.about}">
                     About
                 </a>
             </li>
@@ -106,12 +105,19 @@
         </ul>
 
         <a href="/movies"
-           class="nav-button">
+           class="nav-button" th:text="#{home.explore}">
 
             Explore Movies
 
         </a>
 
+
+        <div class="language-switcher" aria-label="Language selector">
+            <a href="?lang=hy"
+               th:classappend="${#locale.language == 'hy'} ? ' active' : ''">🇦🇲 Հայերեն</a>
+            <a href="?lang=en"
+               th:classappend="${#locale.language == 'en'} ? ' active' : ''">🇬🇧 English</a>
+        </div>
     </nav>
 
 </header>
@@ -125,15 +131,15 @@
 
         <div class="page-hero-content">
 
-            <p class="hero-label">
+            <p class="hero-label" th:text="#{movies.heroLabel}">
                 CINEVERSE COLLECTION
             </p>
 
-            <h1>
+            <h1 th:text="#{movies.heading}">
                 Explore Movies
             </h1>
 
-            <p>
+            <p th:text="#{movies.description}">
                 Search, filter and discover movies
                 that match your interests.
             </p>
@@ -152,11 +158,11 @@
 
             <div class="section-heading">
 
-                <p class="section-label">
+                <p class="section-label" th:text="#{movies.findLabel}">
                     FIND YOUR MOVIE
                 </p>
 
-                <h2 id="filters-title">
+                <h2 id="filters-title" th:text="#{movies.searchFilterHeading}">
                     Search & Filter
                 </h2>
 
@@ -171,7 +177,7 @@
 
                 <div class="filter-group">
 
-                    <label for="search">
+                    <label for="search" th:text="#{movie.titleLabel}">
                         Movie Title
                     </label>
 
@@ -180,7 +186,7 @@
                             type="search"
                             name="search"
                             th:value="${search}"
-                            placeholder="Search by title..."
+                            th:placeholder="#{movies.searchPlaceholder}" placeholder="Search by title..."
                             autocomplete="off">
 
                 </div>
@@ -190,54 +196,54 @@
 
                 <div class="filter-group">
 
-                    <label for="genre">
+                    <label for="genre" th:text="#{movie.genreLabel}">
                         Genre
                     </label>
 
                     <select id="genre"
                             name="genre">
 
-                        <option value="">
+                        <option value="" th:text="#{movies.allGenres}">
                             All Genres
                         </option>
 
                         <option value="Action"
-                                th:selected="${genre == 'Action'}">
+                                th:selected="${genre == 'Action'}" th:text="#{genre.action}">
                             Action
                         </option>
 
                         <option value="Drama"
-                                th:selected="${genre == 'Drama'}">
+                                th:selected="${genre == 'Drama'}" th:text="#{genre.drama}">
                             Drama
                         </option>
 
                         <option value="Science Fiction"
-                                th:selected="${genre == 'Science Fiction'}">
+                                th:selected="${genre == 'Science Fiction'}" th:text="#{genre.scienceFiction}">
                             Science Fiction
                         </option>
 
                         <option value="Thriller"
-                                th:selected="${genre == 'Thriller'}">
+                                th:selected="${genre == 'Thriller'}" th:text="#{genre.thriller}">
                             Thriller
                         </option>
 
                         <option value="Comedy"
-                                th:selected="${genre == 'Comedy'}">
+                                th:selected="${genre == 'Comedy'}" th:text="#{genre.comedy}">
                             Comedy
                         </option>
 
                         <option value="Horror"
-                                th:selected="${genre == 'Horror'}">
+                                th:selected="${genre == 'Horror'}" th:text="#{genre.horror}">
                             Horror
                         </option>
 
                         <option value="Romance"
-                                th:selected="${genre == 'Romance'}">
+                                th:selected="${genre == 'Romance'}" th:text="#{genre.romance}">
                             Romance
                         </option>
 
                         <option value="Animation"
-                                th:selected="${genre == 'Animation'}">
+                                th:selected="${genre == 'Animation'}" th:text="#{genre.animation}">
                             Animation
                         </option>
 
@@ -250,7 +256,7 @@
 
                 <div class="filter-group">
 
-                    <label for="year">
+                    <label for="year" th:text="#{movie.releaseYear}">
                         Release Year
                     </label>
 
@@ -259,7 +265,7 @@
                             type="number"
                             name="year"
                             th:value="${year}"
-                            placeholder="e.g. 2024"
+                            th:placeholder="#{movie.yearPlaceholder}" placeholder="e.g. 2024"
                             min="1900"
                             max="2100">
 
@@ -270,14 +276,14 @@
 
                 <div class="filter-group">
 
-                    <label for="minRating">
+                    <label for="minRating" th:text="#{movies.minimumRating}">
                         Minimum Rating
                     </label>
 
                     <select id="minRating"
                             name="minRating">
 
-                        <option value="">
+                        <option value="" th:text="#{movies.anyRating}">
                             Any Rating
                         </option>
 
@@ -310,7 +316,7 @@
 
                 <div class="filter-group">
 
-                    <label for="sort">
+                    <label for="sort" th:text="#{movies.sortBy}">
                         Sort By
                     </label>
 
@@ -318,22 +324,22 @@
                             name="sort">
 
                         <option value=""
-                                th:selected="${sort == ''}">
+                                th:selected="${sort == ''}" th:text="#{movies.defaultSort}">
                             Default
                         </option>
 
                         <option value="rating"
-                                th:selected="${sort == 'rating'}">
+                                th:selected="${sort == 'rating'}" th:text="#{movies.highestRated}">
                             Highest Rated
                         </option>
 
                         <option value="year"
-                                th:selected="${sort == 'year'}">
+                                th:selected="${sort == 'year'}" th:text="#{movies.newest}">
                             Newest
                         </option>
 
                         <option value="title"
-                                th:selected="${sort == 'title'}">
+                                th:selected="${sort == 'title'}" th:text="#{movies.titleAZ}">
                             Title A-Z
                         </option>
 
@@ -347,14 +353,14 @@
                 <div class="filter-actions">
 
                     <button type="submit"
-                            class="primary-button">
+                            class="primary-button" th:text="#{movies.applyFilters}">
 
                         Apply Filters
 
                     </button>
 
                     <a href="/movies"
-                       class="secondary-button">
+                       class="secondary-button" th:text="#{movies.clear}">
 
                         Clear
 
@@ -380,11 +386,11 @@
 
                 <div>
 
-                    <p class="section-label">
+                    <p class="section-label" th:text="#{movies.collectionLabel}">
                         MOVIE COLLECTION
                     </p>
 
-                    <h2 id="movies-title">
+                    <h2 id="movies-title" th:text="#{movies.allMovies}">
                         All Movies
                     </h2>
 
@@ -394,18 +400,14 @@
                 <div class="section-header-actions">
 
                     <span class="results-count"
-                          th:text="${#lists.size(movies)} + ' movies'">
+                          th:text="|${#lists.size(movies)} #{movies.resultsCount}|">
 
                         0 movies
 
                     </span>
 
                     <a href="/movies/add"
-                       class="add-movie-button">
-
-                        + Add Movie
-
-                    </a>
+                       class="add-movie-button" th:text="|+ #{movies.addMovie}|">+ Add Movie</a>
 
                 </div>
 
@@ -505,7 +507,7 @@
                             <button
                                     type="submit"
                                     class="favorite-button"
-                                    th:aria-label="${movie.favorite ? 'Remove ' + movie.title + ' from favorites' : 'Add ' + movie.title + ' to favorites'}">
+                                    th:aria-label="${movie.favorite ? #messages.msg('movie.removeFavorite') : #messages.msg('movie.addFavorite')}">
 
                                 <span
                                         th:text="${movie.favorite ? '♥' : '♡'}"
@@ -570,7 +572,7 @@
                                 th:href="@{/movies/{id}(id=${movie.id})}"
                                 class="details-button">
 
-                            View Details
+                            <span th:text="#{movie.viewDetails}">View Details</span>
 
                             <span aria-hidden="true">
                                 →
@@ -585,7 +587,7 @@
 
                             <a
                                     th:href="@{/movies/edit/{id}(id=${movie.id})}"
-                                    class="edit-button">
+                                    class="edit-button" th:text="#{edit.titlePrefix}">
 
                                 Edit
 
@@ -595,11 +597,11 @@
                             <form
                                     th:action="@{/movies/delete/{id}(id=${movie.id})}"
                                     method="post"
-                                    onsubmit="return confirm('Are you sure you want to delete this movie?');">
+                                    th:onsubmit="|return confirm('#{movies.deleteConfirm}');|">
 
                                 <button
                                         type="submit"
-                                        class="delete-button">
+                                        class="delete-button" th:text="#{movies.delete}">
 
                                     Delete
 
@@ -629,17 +631,17 @@
 
                 </div>
 
-                <h3>
+                <h3 th:text="#{movies.emptyTitle}">
                     No Movies Found
                 </h3>
 
-                <p>
+                <p th:text="#{movies.emptyDescription}">
                     We couldn't find any movies matching
                     your search or filters.
                 </p>
 
                 <a href="/movies"
-                   class="primary-button">
+                   class="primary-button" th:text="#{home.viewAll}">
 
                     View All Movies
 
@@ -669,7 +671,7 @@
 
             </a>
 
-            <p>
+            <p th:text="#{footer.description}">
                 Discover movies. Find stories.
                 Create your watchlist.
             </p>
@@ -678,34 +680,34 @@
 
 
         <nav class="footer-navigation"
-             aria-label="Footer navigation">
+             aria-label="Footer navigation" th:aria-label="#{nav.footerAria}">
 
-            <h2>
+            <h2 th:text="#{footer.explore}">
                 Explore
             </h2>
 
             <ul>
 
                 <li>
-                    <a href="/">
+                    <a href="/" th:text="#{nav.home}">
                         Home
                     </a>
                 </li>
 
                 <li>
-                    <a href="/movies">
+                    <a href="/movies" th:text="#{nav.movies}">
                         Movies
                     </a>
                 </li>
 
                 <li>
-                    <a href="/top-rated">
+                    <a href="/top-rated" th:text="#{nav.topRated}">
                         Top Rated
                     </a>
                 </li>
 
                 <li>
-                    <a href="/favorites">
+                    <a href="/favorites" th:text="#{nav.favorites}">
                         Favorites
                     </a>
                 </li>
@@ -721,7 +723,7 @@
                 CineVerse
             </h2>
 
-            <p>
+            <p th:text="#{footer.info}">
                 A modern movie discovery platform
                 built with Spring Boot and MySQL.
             </p>
@@ -733,7 +735,7 @@
 
     <div class="footer-bottom">
 
-        <p>
+        <p th:text="#{footer.copyright}">
             © 2026 CineVerse. All rights reserved.
         </p>
 

@@ -1,515 +1,288 @@
 <!DOCTYPE html>
-<html lang="en"
+<html th:lang="${#locale.language}" lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+  <title th:text="#{favorites.title}">Favorite Movies - CineVerse</title>
 
-  <title>Favorite Movies - CineVerse</title>
-
-    <link rel="stylesheet" th:href="@{/style.css}">
+  <link rel="stylesheet" th:href="@{/style.css}">
 
   <meta name="description"
+        th:content="#{favorites.metaDescription}"
         content="View your favorite movies on CineVerse. Keep track of the films you love and easily return to them whenever you want.">
 
   <meta name="keywords"
         content="favorite movies, movie watchlist, saved movies, favorite films, CineVerse">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="CineVerse">
 
-  <meta name="robots"
-        content="index, follow">
+  <link rel="canonical" href="http://localhost:8082/favorites">
 
-  <meta name="author"
-        content="CineVerse">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Favorite Movies - CineVerse">
+  <meta property="og:description" content="View and manage your favorite movies on CineVerse.">
+  <meta property="og:url" content="http://localhost:8082/favorites">
+  <meta property="og:site_name" content="CineVerse">
 
-  <link rel="canonical"
-        href="http://localhost:8082/favorites">
-
-
-
-
-  <meta property="og:type"
-        content="website">
-
-  <meta property="og:title"
-        content="Favorite Movies - CineVerse">
-
-  <meta property="og:description"
-        content="View and manage your favorite movies on CineVerse.">
-
-  <meta property="og:url"
-        content="http://localhost:8082/favorites">
-
-  <meta property="og:site_name"
-        content="CineVerse">
-
-
-
-  <meta name="twitter:card"
-        content="summary">
-
-  <meta name="twitter:title"
-        content="Favorite Movies - CineVerse">
-
-  <meta name="twitter:description"
-        content="View your favorite movies on CineVerse.">
-
-
-
-
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Favorite Movies - CineVerse">
+  <meta name="twitter:description" content="View your favorite movies on CineVerse.">
 </head>
-
 
 <body>
 
-
-
 <header>
-
   <nav class="navbar"
-       aria-label="Main navigation">
+       aria-label="Main navigation"
+       th:aria-label="#{nav.mainAria}">
 
     <a href="/"
        class="logo"
-       aria-label="CineVerse home">
-
+       aria-label="CineVerse home"
+       th:aria-label="#{nav.homeAria}">
       Cine<span>Verse</span>
-
     </a>
 
-
     <ul class="nav-links">
-
       <li>
-        <a href="/">
-          Home
-        </a>
+        <a href="/" th:text="#{nav.home}">Home</a>
       </li>
 
       <li>
-        <a href="/movies">
-          Movies
-        </a>
+        <a href="/movies" th:text="#{nav.movies}">Movies</a>
       </li>
 
       <li>
-        <a href="/top-rated">
-          Top Rated
-        </a>
+        <a href="/top-rated" th:text="#{nav.topRated}">Top Rated</a>
       </li>
 
       <li>
         <a href="/favorites"
-           class="active">
-
+           class="active"
+           th:text="#{nav.favorites}">
           Favorites
-
         </a>
       </li>
-
     </ul>
 
-
     <a href="/movies"
-       class="nav-button">
-
+       class="nav-button"
+       th:text="#{home.explore}">
       Explore Movies
-
     </a>
 
+    <div class="language-switcher" aria-label="Language selector">
+      <a href="?lang=hy"
+         th:classappend="${#locale.language == 'hy'} ? ' active' : ''">
+        🇦🇲 Հայերեն
+      </a>
+
+      <a href="?lang=en"
+         th:classappend="${#locale.language == 'en'} ? ' active' : ''">
+        🇬🇧 English
+      </a>
+    </div>
   </nav>
-
 </header>
-
-
-
-<!-- MAIN -->
 
 <main>
 
-
-  <!-- PAGE HERO -->
-
   <section class="page-hero">
-
     <div class="page-hero-content">
-
-      <p class="hero-label">
+      <p class="hero-label" th:text="#{favorites.heroLabel}">
         YOUR COLLECTION
       </p>
 
-      <h1>
+      <h1 th:text="#{favorites.heading}">
         Favorite Movies
       </h1>
 
-      <p>
-        Keep the movies you love
-        in one convenient place.
+      <p th:text="#{favorites.description}">
+        Keep the movies you love in one convenient place.
       </p>
-
     </div>
-
   </section>
 
-
-
-  <!-- FAVORITES -->
-
-  <section class="movies-section"
-           aria-labelledby="favorites-title">
-
+  <section class="movies-section" aria-labelledby="favorites-title">
     <div class="section-container">
 
-
       <div class="section-header">
-
         <div>
-
-          <p class="section-label">
+          <p class="section-label" th:text="#{favorites.sectionLabel}">
             YOUR FAVORITES
           </p>
 
-          <h2 id="favorites-title">
+          <h2 id="favorites-title" th:text="#{favorites.subheading}">
             Movies You Love
           </h2>
-
         </div>
 
-
+        <!-- Corrected Thymeleaf expression -->
         <span class="results-count"
-              th:text="${#lists.size(movies)} + ' movies'">
-
-                    0 movies
-
-                </span>
-
+              th:text="|${#lists.size(movies)} #{movies.resultsCount}|">
+          0 movies
+        </span>
       </div>
-
-
-
-      <!-- MOVIE GRID -->
 
       <div class="movie-grid">
-
-        <article class="movie-card"
-                 th:each="movie : ${movies}">
-
-
-          <!-- POSTER -->
+        <article class="movie-card" th:each="movie : ${movies}">
 
           <div class="movie-poster">
-
-
             <div class="poster-placeholder">
-
-                            <span aria-hidden="true">
-                                🎬
-                            </span>
-
+              <span aria-hidden="true">🎬</span>
             </div>
 
-
-            <!-- FAVORITE BADGE -->
-
-            <div class="favorite-badge"
-                 aria-label="Favorite movie">
-
+            <div class="favorite-badge" aria-label="Favorite movie">
               ♥
-
             </div>
-
-
-            <!-- RATING -->
 
             <div class="rating-badge">
-
-                            <span aria-hidden="true">
-                                ★
-                            </span>
-
-              <span th:text="${movie.rating}">
-                                8.5
-                            </span>
-
+              <span aria-hidden="true">★</span>
+              <span th:text="${movie.rating}">8.5</span>
             </div>
 
+            <form th:action="@{/movies/{id}/favorite(id=${movie.id})}"
+                  method="post"
+                  class="favorite-form">
 
-            <!-- REMOVE FAVORITE -->
+              <input type="hidden" name="redirect" value="/favorites">
 
-            <form
-                    th:action="@{/movies/{id}/favorite(id=${movie.id})}"
-                    method="post"
-                    class="favorite-form">
-
-              <input
-                      type="hidden"
-                      name="redirect"
-                      value="/favorites">
-
-              <button
-                      type="submit"
+              <button type="submit"
                       class="favorite-button"
-                      th:aria-label="'Remove ' + ${movie.title} + ' from favorites'">
-
-                                <span
-                                        aria-hidden="true">
-                                    ♥
-                                </span>
-
+                      th:aria-label="#{movie.removeFavorite}">
+                <span aria-hidden="true">♥</span>
               </button>
-
             </form>
-
           </div>
-
-
-
-          <!-- MOVIE CONTENT -->
 
           <div class="movie-content">
-
-
             <div class="movie-meta">
+              <span class="genre-badge" th:text="${movie.genre}">
+                Genre
+              </span>
 
-                            <span class="genre-badge"
-                                  th:text="${movie.genre}">
-
-                                Genre
-
-                            </span>
-
-              <span class="movie-year"
-                    th:text="${movie.year}">
-
-                                2026
-
-                            </span>
-
+              <span class="movie-year" th:text="${movie.year}">
+                2026
+              </span>
             </div>
 
-
             <h3>
-
-              <a
-                      th:href="@{/movies/{id}(id=${movie.id})}"
-                      th:text="${movie.title}">
-
+              <a th:href="@{/movies/{id}(id=${movie.id})}"
+                 th:text="${movie.title}">
                 Movie Title
-
               </a>
-
             </h3>
 
-
-            <p class="movie-description"
-               th:text="${movie.description}">
-
+            <p class="movie-description" th:text="${movie.description}">
               Movie description.
-
             </p>
 
+            <a th:href="@{/movies/{id}(id=${movie.id})}"
+               class="details-button">
 
-            <a
-                    th:href="@{/movies/{id}(id=${movie.id})}"
-                    class="details-button">
-
-              View Details
-
-              <span aria-hidden="true">
-                                →
-                            </span>
-
+              <span th:text="#{movie.viewDetails}">View Details</span>
+              <span aria-hidden="true">→</span>
             </a>
-
           </div>
-
         </article>
-
       </div>
 
+      <div class="empty-state" th:if="${#lists.isEmpty(movies)}">
+        <div class="empty-icon" aria-hidden="true">♡</div>
 
-
-      <!-- EMPTY FAVORITES -->
-
-      <div
-              class="empty-state"
-              th:if="${#lists.isEmpty(movies)}">
-
-        <div class="empty-icon"
-             aria-hidden="true">
-
-          ♡
-
-        </div>
-
-
-        <h3>
+        <h3 th:text="#{favorites.emptyTitle}">
           No Favorite Movies Yet
         </h3>
 
-
-        <p>
-          You haven't added any movies to your
-          favorites yet. Explore the collection
-          and save the movies you love.
+        <p th:text="#{favorites.emptyDescription}">
+          You haven't added any movies to your favorites yet. Explore the
+          collection and save the movies you love.
         </p>
 
-
         <a href="/movies"
-           class="primary-button">
-
+           class="primary-button"
+           th:text="#{home.explore}">
           Explore Movies
-
         </a>
-
       </div>
 
     </div>
-
   </section>
 
-
-
-  <!-- DISCOVERY SECTION -->
-
-  <section class="features-section"
-           aria-labelledby="favorites-info-title">
-
+  <section class="features-section" aria-labelledby="favorites-info-title">
     <div class="section-container">
-
       <div class="section-heading centered">
 
-        <p class="section-label">
+        <p class="section-label" th:text="#{favorites.ctaLabel}">
           KEEP DISCOVERING
         </p>
 
-        <h2 id="favorites-info-title">
+        <h2 id="favorites-info-title" th:text="#{favorites.ctaHeading}">
           Find More Movies
         </h2>
 
-        <p>
-          Explore the CineVerse collection and
-          add new movies to your favorites.
+        <p th:text="#{favorites.ctaDescription}">
+          Explore the CineVerse collection and add new movies to your favorites.
         </p>
 
-
         <a href="/movies"
-           class="primary-button">
-
+           class="primary-button"
+           th:text="#{home.browseMovies}">
           Browse Movies
-
         </a>
-
       </div>
-
     </div>
-
   </section>
-
 
 </main>
 
-
-
-<!-- FOOTER -->
-
 <footer>
-
   <div class="footer-content">
 
-
     <div class="footer-brand">
-
-      <a href="/"
-         class="logo">
-
+      <a href="/" class="logo">
         Cine<span>Verse</span>
-
       </a>
 
-      <p>
-        Discover movies. Find stories.
-        Create your watchlist.
+      <p th:text="#{footer.description}">
+        Discover movies. Find stories. Create your watchlist.
       </p>
-
     </div>
-
-
 
     <nav class="footer-navigation"
-         aria-label="Footer navigation">
+         aria-label="Footer navigation"
+         th:aria-label="#{nav.footerAria}">
 
-      <h2>
-        Explore
-      </h2>
+      <h2 th:text="#{footer.explore}">Explore</h2>
 
       <ul>
-
-        <li>
-          <a href="/">
-            Home
-          </a>
-        </li>
-
-        <li>
-          <a href="/movies">
-            Movies
-          </a>
-        </li>
-
-        <li>
-          <a href="/top-rated">
-            Top Rated
-          </a>
-        </li>
-
-        <li>
-          <a href="/favorites">
-            Favorites
-          </a>
-        </li>
-
-          <li>
-              <a href="/about">
-                  About
-              </a>
-          </li>
+        <li><a href="/" th:text="#{nav.home}">Home</a></li>
+        <li><a href="/movies" th:text="#{nav.movies}">Movies</a></li>
+        <li><a href="/top-rated" th:text="#{nav.topRated}">Top Rated</a></li>
+        <li><a href="/favorites" th:text="#{nav.favorites}">Favorites</a></li>
+        <li><a href="/about" th:text="#{nav.about}">About</a></li>
       </ul>
-
     </nav>
 
-
-
     <div class="footer-info">
+      <h2>CineVerse</h2>
 
-      <h2>
-        CineVerse
-      </h2>
-
-      <p>
-        A modern movie discovery platform
-        built with Spring Boot and MySQL.
+      <p th:text="#{footer.info}">
+        A modern movie discovery platform built with Spring Boot and MySQL.
       </p>
-
     </div>
 
   </div>
 
-
-
   <div class="footer-bottom">
-
-    <p>
+    <p th:text="#{footer.copyright}">
       © 2026 CineVerse. All rights reserved.
     </p>
-
   </div>
-
 </footer>
-
 
 </body>
 </html>

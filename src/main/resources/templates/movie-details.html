@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en"
+<html th:lang="${#locale.language}" lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -17,8 +17,7 @@
     <link rel="stylesheet"
           th:href="@{/style.css}">
 
-    <meta name="description"
-          th:content="${movie.description}">
+    <meta name="description" th:content="${movie.description}" content="Discover this movie on CineVerse.">
 
     <meta name="robots"
           content="index, follow">
@@ -60,11 +59,11 @@
 <header>
 
     <nav class="navbar"
-         aria-label="Main navigation">
+         aria-label="Main navigation" th:aria-label="#{nav.mainAria}">
 
         <a href="/"
            class="logo"
-           aria-label="CineVerse home">
+           aria-label="CineVerse home" th:aria-label="#{nav.homeAria}">
 
             Cine<span>Verse</span>
 
@@ -73,25 +72,25 @@
         <ul class="nav-links">
 
             <li>
-                <a href="/">
+                <a href="/" th:text="#{nav.home}">
                     Home
                 </a>
             </li>
 
             <li>
-                <a href="/movies">
+                <a href="/movies" th:text="#{nav.movies}">
                     Movies
                 </a>
             </li>
 
             <li>
-                <a href="/top-rated">
+                <a href="/top-rated" th:text="#{nav.topRated}">
                     Top Rated
                 </a>
             </li>
 
             <li>
-                <a href="/favorites">
+                <a href="/favorites" th:text="#{nav.favorites}">
                     Favorites
                 </a>
             </li>
@@ -99,13 +98,20 @@
         </ul>
 
         <a href="/movies"
-           class="nav-button">
+           class="nav-button" th:text="#{home.explore}">
 
             Explore Movies
 
         </a>
 
-    </nav>
+    
+        <div class="language-switcher" aria-label="Language selector">
+            <a href="?lang=hy"
+               th:classappend="${#locale.language == 'hy'} ? ' active' : ''">🇦🇲 Հայերեն</a>
+            <a href="?lang=en"
+               th:classappend="${#locale.language == 'en'} ? ' active' : ''">🇬🇧 English</a>
+        </div>
+</nav>
 
 </header>
 
@@ -205,7 +211,7 @@
 
                     <div class="movie-info-item">
 
-                        <span class="info-label">
+                        <span class="info-label" th:text="#{movie.genreLabel}">
                             Genre
                         </span>
 
@@ -217,7 +223,7 @@
 
                     <div class="movie-info-item">
 
-                        <span class="info-label">
+                        <span class="info-label" th:text="#{movie.releaseYear}">
                             Release Year
                         </span>
 
@@ -229,7 +235,7 @@
 
                     <div class="movie-info-item">
 
-                        <span class="info-label">
+                        <span class="info-label" th:text="#{movie.ratingLabel}">
                             Rating
                         </span>
 
@@ -275,7 +281,7 @@
                             </span>
 
                             <span
-                                    th:text="${movie.favorite ? 'Remove from Favorites' : 'Add to Favorites'}">
+                                    th:text="${movie.favorite ? #messages.msg('movie.removeFavorite') : #messages.msg('movie.addFavorite')}">
 
                                 Add to Favorites
 
@@ -288,7 +294,7 @@
                     <!-- BACK -->
 
                     <a href="/movies"
-                       class="secondary-button">
+                       class="secondary-button" th:text="#{movie.backToMovies}">
 
                         ← Back to Movies
 
@@ -311,21 +317,21 @@
 
             <div class="section-heading centered">
 
-                <p class="section-label">
+                <p class="section-label" th:text="#{details.sectionLabel}">
                     KEEP EXPLORING
                 </p>
 
-                <h2 id="discover-title">
+                <h2 id="discover-title" th:text="#{details.heading}">
                     Discover More Movies
                 </h2>
 
-                <p>
+                <p th:text="#{details.description}">
                     Explore the CineVerse collection and
                     discover your next favorite story.
                 </p>
 
                 <a href="/movies"
-                   class="primary-button">
+                   class="primary-button" th:text="#{details.browseAllMovies}">
 
                     Browse All Movies
 
@@ -354,7 +360,7 @@
 
             </a>
 
-            <p>
+            <p th:text="#{footer.description}">
                 Discover movies. Find stories.
                 Create your watchlist.
             </p>
@@ -362,34 +368,34 @@
         </div>
 
         <nav class="footer-navigation"
-             aria-label="Footer navigation">
+             aria-label="Footer navigation" th:aria-label="#{nav.footerAria}">
 
-            <h2>
+            <h2 th:text="#{footer.explore}">
                 Explore
             </h2>
 
             <ul>
 
                 <li>
-                    <a href="/">
+                    <a href="/" th:text="#{nav.home}">
                         Home
                     </a>
                 </li>
 
                 <li>
-                    <a href="/movies">
+                    <a href="/movies" th:text="#{nav.movies}">
                         Movies
                     </a>
                 </li>
 
                 <li>
-                    <a href="/top-rated">
+                    <a href="/top-rated" th:text="#{nav.topRated}">
                         Top Rated
                     </a>
                 </li>
 
                 <li>
-                    <a href="/favorites">
+                    <a href="/favorites" th:text="#{nav.favorites}">
                         Favorites
                     </a>
                 </li>
@@ -404,7 +410,7 @@
                 CineVerse
             </h2>
 
-            <p>
+            <p th:text="#{footer.info}">
                 A modern movie discovery platform
                 built with Spring Boot and MySQL.
             </p>
@@ -415,7 +421,7 @@
 
     <div class="footer-bottom">
 
-        <p>
+        <p th:text="#{footer.copyright}">
             © 2026 CineVerse. All rights reserved.
         </p>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
+<html th:lang="${#locale.language}" lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -9,12 +9,12 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Add Movie - CineVerse</title>
+    <title th:text="#{add.title}">Add Movie - CineVerse</title>
 
     <link rel="stylesheet" th:href="@{/style.css}">
 
     <meta name="description"
-          content="Add a new movie to the CineVerse movie collection.">
+          th:content="#{add.metaDescription}" content="Add a new movie to the CineVerse movie collection.">
 
     <meta name="robots"
           content="noindex, nofollow">
@@ -31,11 +31,11 @@
 <header>
 
     <nav class="navbar"
-         aria-label="Main navigation">
+         aria-label="Main navigation" th:aria-label="#{nav.mainAria}">
 
         <a href="/"
            class="logo"
-           aria-label="CineVerse home">
+           aria-label="CineVerse home" th:aria-label="#{nav.homeAria}">
 
             Cine<span>Verse</span>
 
@@ -44,31 +44,38 @@
         <ul class="nav-links">
 
             <li>
-                <a href="/">Home</a>
+                <a href="/" th:text="#{nav.home}">Home</a>
             </li>
 
             <li>
-                <a href="/movies">Movies</a>
+                <a href="/movies" th:text="#{nav.movies}">Movies</a>
             </li>
 
             <li>
-                <a href="/top-rated">Top Rated</a>
+                <a href="/top-rated" th:text="#{nav.topRated}">Top Rated</a>
             </li>
 
             <li>
-                <a href="/favorites">Favorites</a>
+                <a href="/favorites" th:text="#{nav.favorites}">Favorites</a>
             </li>
 
         </ul>
 
         <a href="/movies"
-           class="nav-button">
+           class="nav-button" th:text="#{home.explore}">
 
             Explore Movies
 
         </a>
 
-    </nav>
+    
+        <div class="language-switcher" aria-label="Language selector">
+            <a href="?lang=hy"
+               th:classappend="${#locale.language == 'hy'} ? ' active' : ''">🇦🇲 Հայերեն</a>
+            <a href="?lang=en"
+               th:classappend="${#locale.language == 'en'} ? ' active' : ''">🇬🇧 English</a>
+        </div>
+</nav>
 
 </header>
 
@@ -79,15 +86,15 @@
 
         <div class="page-hero-content">
 
-            <p class="hero-label">
+            <p class="hero-label" th:text="#{admin.label}">
                 CINEVERSE ADMIN
             </p>
 
-            <h1>
+            <h1 th:text="#{add.heading}">
                 Add a Movie
             </h1>
 
-            <p>
+            <p th:text="#{add.description}">
                 Add a new movie to your CineVerse collection.
             </p>
 
@@ -102,15 +109,15 @@
 
             <div class="section-heading centered">
 
-                <p class="section-label">
+                <p class="section-label" th:text="#{movie.information}">
                     MOVIE INFORMATION
                 </p>
 
-                <h2>
+                <h2 th:text="#{add.formHeading}">
                     Create Movie
                 </h2>
 
-                <p>
+                <p th:text="#{add.formDescription}">
                     Enter the movie information below.
                 </p>
 
@@ -126,7 +133,7 @@
 
                 <div class="form-group">
 
-                    <label for="title">
+                    <label for="title" th:text="#{movie.titleLabel}">
                         Movie Title
                     </label>
 
@@ -134,7 +141,7 @@
                             id="title"
                             type="text"
                             name="title"
-                            placeholder="Enter movie title"
+                            th:placeholder="#{movie.titlePlaceholder}" placeholder="Enter movie title"
                             required
                             maxlength="150">
 
@@ -145,7 +152,7 @@
 
                 <div class="form-group">
 
-                    <label for="genre">
+                    <label for="genre" th:text="#{movie.genreLabel}">
                         Genre
                     </label>
 
@@ -153,7 +160,7 @@
                             id="genre"
                             type="text"
                             name="genre"
-                            placeholder="e.g. Action, Drama, Thriller"
+                            th:placeholder="#{movie.genrePlaceholder}" placeholder="e.g. Action, Drama, Thriller"
                             required
                             maxlength="80">
 
@@ -164,7 +171,7 @@
 
                 <div class="form-group">
 
-                    <label for="year">
+                    <label for="year" th:text="#{movie.releaseYear}">
                         Release Year
                     </label>
 
@@ -172,7 +179,7 @@
                             id="year"
                             type="number"
                             name="year"
-                            placeholder="e.g. 2024"
+                            th:placeholder="#{movie.yearPlaceholder}" placeholder="e.g. 2024"
                             min="1900"
                             max="2100"
                             required>
@@ -184,7 +191,7 @@
 
                 <div class="form-group">
 
-                    <label for="rating">
+                    <label for="rating" th:text="#{movie.ratingLabel}">
                         Rating
                     </label>
 
@@ -192,7 +199,7 @@
                             id="rating"
                             type="number"
                             name="rating"
-                            placeholder="e.g. 8.5"
+                            th:placeholder="#{movie.ratingPlaceholder}" placeholder="e.g. 8.5"
                             min="0"
                             max="10"
                             step="0.1"
@@ -205,7 +212,7 @@
 
                 <div class="form-group form-group-full">
 
-                    <label for="description">
+                    <label for="description" th:text="#{movie.descriptionLabel}">
                         Description
                     </label>
 
@@ -213,7 +220,7 @@
                             id="description"
                             name="description"
                             rows="6"
-                            placeholder="Enter a short movie description..."
+                            th:placeholder="#{movie.descriptionPlaceholder}" placeholder="Enter a short movie description..."
                             required
                             maxlength="1000"></textarea>
 
@@ -229,7 +236,7 @@
                             type="checkbox"
                             name="favorite">
 
-                    <label for="favorite">
+                    <label for="favorite" th:text="#{movie.addToFavorites}">
                         Add this movie to favorites
                     </label>
 
@@ -242,14 +249,14 @@
 
                     <button
                             type="submit"
-                            class="primary-button">
+                            class="primary-button" th:text="#{add.submit}">
 
                         Add Movie
 
                     </button>
 
                     <a href="/movies"
-                       class="secondary-button">
+                       class="secondary-button" th:text="#{common.cancel}">
 
                         Cancel
 
@@ -279,7 +286,7 @@
 
             </a>
 
-            <p>
+            <p th:text="#{footer.description}">
                 Discover movies. Find stories.
                 Create your watchlist.
             </p>
@@ -288,28 +295,28 @@
 
 
         <nav class="footer-navigation"
-             aria-label="Footer navigation">
+             aria-label="Footer navigation" th:aria-label="#{nav.footerAria}">
 
-            <h2>
+            <h2 th:text="#{footer.explore}">
                 Explore
             </h2>
 
             <ul>
 
                 <li>
-                    <a href="/">Home</a>
+                    <a href="/" th:text="#{nav.home}">Home</a>
                 </li>
 
                 <li>
-                    <a href="/movies">Movies</a>
+                    <a href="/movies" th:text="#{nav.movies}">Movies</a>
                 </li>
 
                 <li>
-                    <a href="/top-rated">Top Rated</a>
+                    <a href="/top-rated" th:text="#{nav.topRated}">Top Rated</a>
                 </li>
 
                 <li>
-                    <a href="/favorites">Favorites</a>
+                    <a href="/favorites" th:text="#{nav.favorites}">Favorites</a>
                 </li>
 
             </ul>
@@ -323,7 +330,7 @@
                 CineVerse
             </h2>
 
-            <p>
+            <p th:text="#{footer.info}">
                 A modern movie discovery platform
                 built with Spring Boot and MySQL.
             </p>
@@ -335,7 +342,7 @@
 
     <div class="footer-bottom">
 
-        <p>
+        <p th:text="#{footer.copyright}">
             © 2026 CineVerse. All rights reserved.
         </p>
 

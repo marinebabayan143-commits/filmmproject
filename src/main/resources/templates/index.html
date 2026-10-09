@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
+<html th:lang="${#locale.language}" lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -9,11 +9,11 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>CineVerse - Discover Your Next Favorite Movie</title>
+    <title th:text="#{home.title}">CineVerse - Discover Your Next Favorite Movie</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 
     <meta name="description"
-          content="Discover movies on CineVerse. Explore films by genre, rating and release year and find your next favorite movie.">
+          th:content="#{home.metaDescription}" content="Discover movies on CineVerse. Explore films by genre, rating and release year and find your next favorite movie.">
 
     <meta name="keywords"
           content="movies, films, cinema, movie discovery, movie ratings, movie genres, CineVerse">
@@ -58,11 +58,11 @@
 <header>
 
     <nav class="navbar"
-         aria-label="Main navigation">
+         aria-label="Main navigation" th:aria-label="#{nav.mainAria}">
 
         <a href="/"
            class="logo"
-           aria-label="CineVerse home">
+           aria-label="CineVerse home" th:aria-label="#{nav.homeAria}">
 
             Cine<span>Verse</span>
 
@@ -71,33 +71,40 @@
         <ul class="nav-links">
 
             <li>
-                <a href="/">Home</a>
+                <a href="/" th:text="#{nav.home}">Home</a>
             </li>
 
             <li>
-                <a href="/movies">Movies</a>
+                <a href="/movies" th:text="#{nav.movies}">Movies</a>
             </li>
 
             <li>
-                <a href="/top-rated">Top Rated</a>
+                <a href="/top-rated" th:text="#{nav.topRated}">Top Rated</a>
             </li>
 
             <li>
-                <a href="/favorites">Favorites</a>
+                <a href="/favorites" th:text="#{nav.favorites}">Favorites</a>
             </li>
 
             <li>
-                <a href="/about">About</a>
+                <a href="/about" th:text="#{nav.about}">About</a>
             </li>
 
         </ul>
 
         <a href="/movies"
-           class="nav-button">
+           class="nav-button" th:text="#{home.explore}">
             Explore Movies
         </a>
 
-    </nav>
+    
+        <div class="language-switcher" aria-label="Language selector">
+            <a href="?lang=hy"
+               th:classappend="${#locale.language == 'hy'} ? ' active' : ''">🇦🇲 Հայերեն</a>
+            <a href="?lang=en"
+               th:classappend="${#locale.language == 'en'} ? ' active' : ''">🇬🇧 English</a>
+        </div>
+</nav>
 
 </header>
 
@@ -112,15 +119,15 @@
 
         <div class="hero-content">
 
-            <p class="hero-label">
+            <p class="hero-label" th:text="#{home.heroLabel}">
                 YOUR MOVIE DISCOVERY PLATFORM
             </p>
 
-            <h1 id="hero-title">
+            <h1 id="hero-title" th:text="#{home.heroHeading}">
                 Discover Your Next Favorite Movie
             </h1>
 
-            <p class="hero-description">
+            <p class="hero-description" th:text="#{home.heroDescription}">
                 Explore unforgettable stories, discover new films,
                 compare ratings and find movies worth watching.
             </p>
@@ -128,12 +135,12 @@
             <div class="hero-actions">
 
                 <a href="/movies"
-                   class="primary-button">
+                   class="primary-button" th:text="#{home.explore}">
                     Explore Movies
                 </a>
 
                 <a href="/top-rated"
-                   class="secondary-button">
+                   class="secondary-button" th:text="#{nav.topRated}">
                     Top Rated
                 </a>
 
@@ -153,11 +160,11 @@
 
             <div class="section-heading">
 
-                <p class="section-label">
+                <p class="section-label" th:text="#{home.searchLabel}">
                     FIND YOUR NEXT FILM
                 </p>
 
-                <h2 id="search-title">
+                <h2 id="search-title" th:text="#{home.searchHeading}">
                     Search Movies
                 </h2>
 
@@ -167,7 +174,7 @@
                   method="get"
                   class="home-search">
 
-                <label for="home-search">
+                <label for="home-search" th:text="#{home.searchLabelInput}">
                     Search by movie title
                 </label>
 
@@ -177,11 +184,11 @@
                             id="home-search"
                             type="search"
                             name="search"
-                            placeholder="Search for a movie..."
+                            th:placeholder="#{home.searchPlaceholder}" placeholder="Search for a movie..."
                             autocomplete="off">
 
                     <button type="submit"
-                            class="search-button">
+                            class="search-button" th:text="#{home.searchButton}">
                         Search
                     </button>
 
@@ -205,11 +212,11 @@
 
                 <div>
 
-                    <p class="section-label">
+                    <p class="section-label" th:text="#{home.collectionLabel}">
                         EXPLORE OUR COLLECTION
                     </p>
 
-                    <h2 id="featured-title">
+                    <h2 id="featured-title" th:text="#{home.featured}">
                         Featured Movies
                     </h2>
 
@@ -218,7 +225,7 @@
                 <a href="/movies"
                    class="section-link">
 
-                    View All Movies
+                    <span th:text="#{home.viewAll}">View All Movies</span>
 
                     <span aria-hidden="true">
                         →
@@ -272,9 +279,7 @@
 
                         <button type="submit"
                                 class="favorite-button"
-                                th:aria-label="${movie.favorite}
-                                    ? 'Remove ' + movie.title + ' from favorites'
-                                    : 'Add ' + movie.title + ' to favorites'">
+                                th:aria-label="${movie.favorite ? #messages.msg('movie.removeFavorite') : #messages.msg('movie.addFavorite')}">
 
                             <span th:text="${movie.favorite ? '♥' : '♡'}"
                                   aria-hidden="true">
@@ -325,7 +330,7 @@
                         <a th:href="@{/movies/{id}(id=${movie.id})}"
                            class="details-button">
 
-                            View Details
+                            <span th:text="#{movie.viewDetails}">View Details</span>
 
                             <span aria-hidden="true">
                                 →
@@ -350,17 +355,17 @@
                     🎬
                 </div>
 
-                <h3>
+                <h3 th:text="#{home.emptyTitle}">
                     No movies available yet
                 </h3>
 
-                <p>
+                <p th:text="#{home.emptyDescription}">
                     Our movie collection is being prepared.
                     Check back soon for new films.
                 </p>
 
                 <a href="/movies"
-                   class="primary-button">
+                   class="primary-button" th:text="#{home.browseMovies}">
                     Browse Movies
                 </a>
 
@@ -380,15 +385,15 @@
 
             <div class="section-heading centered">
 
-                <p class="section-label">
+                <p class="section-label" th:text="#{home.whyLabel}">
                     WHY CINEVERSE
                 </p>
 
-                <h2 id="features-title">
+                <h2 id="features-title" th:text="#{home.featuresHeading}">
                     Everything You Need to Discover Movies
                 </h2>
 
-                <p>
+                <p th:text="#{home.featuresDescription}">
                     A simple and modern way to explore films,
                     discover highly rated movies and keep track
                     of your favorites.
@@ -406,11 +411,11 @@
                         🔎
                     </div>
 
-                    <h3>
+                    <h3 th:text="#{home.discover}">
                         Discover
                     </h3>
 
-                    <p>
+                    <p th:text="#{home.discoverDescription}">
                         Search through our movie collection
                         and discover films across different genres.
                     </p>
@@ -425,11 +430,11 @@
                         ⭐
                     </div>
 
-                    <h3>
+                    <h3 th:text="#{home.topRatedCard}">
                         Top Rated
                     </h3>
 
-                    <p>
+                    <p th:text="#{home.topRatedDescription}">
                         Explore highly rated movies and find
                         stories that are worth watching.
                     </p>
@@ -444,11 +449,11 @@
                         ♥
                     </div>
 
-                    <h3>
+                    <h3 th:text="#{home.favoritesCard}">
                         Favorites
                     </h3>
 
-                    <p>
+                    <p th:text="#{home.favoritesDescription}">
                         Save movies you love and easily return
                         to them whenever you want.
                     </p>
@@ -479,7 +484,7 @@
 
             </a>
 
-            <p>
+            <p th:text="#{footer.description}">
                 Discover movies. Find stories.
                 Create your watchlist.
             </p>
@@ -488,32 +493,32 @@
 
 
         <nav class="footer-navigation"
-             aria-label="Footer navigation">
+             aria-label="Footer navigation" th:aria-label="#{nav.footerAria}">
 
-            <h2>
+            <h2 th:text="#{footer.explore}">
                 Explore
             </h2>
 
             <ul>
 
                 <li>
-                    <a href="/">Home</a>
+                    <a href="/" th:text="#{nav.home}">Home</a>
                 </li>
 
                 <li>
-                    <a href="/movies">Movies</a>
+                    <a href="/movies" th:text="#{nav.movies}">Movies</a>
                 </li>
 
                 <li>
-                    <a href="/top-rated">Top Rated</a>
+                    <a href="/top-rated" th:text="#{nav.topRated}">Top Rated</a>
                 </li>
 
                 <li>
-                    <a href="/favorites">Favorites</a>
+                    <a href="/favorites" th:text="#{nav.favorites}">Favorites</a>
                 </li>
 
                 <li>
-                    <a href="/about">About</a>
+                    <a href="/about" th:text="#{nav.about}">About</a>
                 </li>
 
             </ul>
@@ -527,7 +532,7 @@
                 CineVerse
             </h2>
 
-            <p>
+            <p th:text="#{footer.info}">
                 A modern movie discovery platform
                 built with Spring Boot and MySQL.
             </p>
@@ -539,7 +544,7 @@
 
     <div class="footer-bottom">
 
-        <p>
+        <p th:text="#{footer.copyright}">
             © 2026 CineVerse. All rights reserved.
         </p>
 
